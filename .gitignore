@@ -1,4 +1,5 @@
 venv/
+.env
 
 *.pyc
 __pycache__/
@@ -12,6 +13,8 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+.vscode/
 
 .ipynb_checkpoints/
 notebooks/datasets/true_car_listings.csv
