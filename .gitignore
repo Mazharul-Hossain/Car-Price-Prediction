@@ -12,3 +12,6 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+.ipynb_checkpoints/
+notebooks/datasets/true_car_listings.csv
