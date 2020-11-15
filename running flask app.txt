@@ -1,0 +1,10 @@
+
+
+go to project folder:
+
+- run cmd
+- on cmd , run "environment\Scripts\activate" (environment will be activated)
+
+running flask in environment:
+- on cmd, flask run (should see server running...) 
+-
