@@ -12,4 +12,7 @@ go to project folder:
 
 running flask in environment:
 - on cmd, type "flask run" (should see server running...127.0.0.1:5000) 
--
+
+Using Heroku:
+ - https://devcenter.heroku.com/articles/flask-memcache
+ - Saving requirements: https://stackoverflow.com/a/63230125/2049763
