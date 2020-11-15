@@ -1,10 +1,15 @@
 
 
+for installation:
+
+- see the following video.
+  https://www.youtube.com/watch?v=QjtW-wnXlUY&t=373s
+
 go to project folder:
 
 - run cmd
 - on cmd , run "environment\Scripts\activate" (environment will be activated)
 
 running flask in environment:
-- on cmd, flask run (should see server running...) 
+- on cmd, type "flask run" (should see server running...127.0.0.1:5000) 
 -
