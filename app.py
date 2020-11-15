@@ -37,6 +37,7 @@ def predict():
     final_features = [np.array(int_features)]
     #print(final_features)
     prediction = model.predict(final_features)
+    #return render_template('car-price.html', prediction_text=final_features)
 
     output = round(prediction[0], 2)
 
