@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Light Way Admin</title>
+
+    <link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/local.css" />
+
+    <script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="wrapper">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+    
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li><a href="{{url_for('index')}}"><i class="fa fa-bullseye"></i> Dashboard</a></li>
+                    <li><a href="templates/portfolio.html"><i class="fa fa-tasks"></i> ML models</a></li>                    
+                    <li><a href="templates/blog.html"><i class="fa fa-globe"></i>Model Comparison</a></li>
+                    <li><a href="{{url_for('car_price')}}"><i class="fa fa-list-ol"></i> Know Your Car Price</a></li>
+                    <li class="active"><a href="{{url_for('about')}}"><i class="fa fa-table"></i > About</a></li>                    
+                </ul>
+
+            </div>
+        </nav>
+         <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <h3>Dashboard</h3>
+                <h4>Introductory Data Analysis</h4>
+                <p>
+                 Data analysis and exploration of our Used Car dataset is shown in the dashboard
+                </p>
+
+            </div>
+        </div>
+     <hr />
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <h3>Know Your Car Price</h3>
+                
+                <p>
+                Using user input (car make , model, year), you can find an estimate price of your desired car. 
+                </p>
+
+            </div>
+        </div>
+     <hr />
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <h3>ML Models</h3>
+                
+                <p>
+                  TBD      
+                </p>
+
+            </div>
+        </div>
+     <hr />
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <h3>Model Comparison</h3>
+                
+                <p>
+                TBD      
+                </p>
+
+            </div>
+        </div>
+     <hr />
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <h3>Limitations</h3>
+                
+                <p>
+                TBD      
+                </p>
+
+            </div>
+        </div>
+     <hr />
+</div>
+
+</div>
+</body>
+</html>

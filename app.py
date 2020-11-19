@@ -16,6 +16,10 @@ def index():
 def hello():
     return '<h3>Hello World!....it works....testing</h3>'
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/bootstrap-elements')
 def bootstrap():
     return render_template('bootstrap-elements.html')
