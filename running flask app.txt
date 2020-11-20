@@ -3,10 +3,16 @@ For installation:
 - see the following video.
   https://www.youtube.com/watch?v=QjtW-wnXlUY&t=373s
 
+ - on conda,
+   - conda create -n flask python=3.7
+   - conda activate flask
+   - pip install -r requirements.txt
+
 Go to project folder:
 
 - run cmd
-- on cmd , run "environment\Scripts\activate" (environment will be activated)
+- on cmd , run "venv\Scripts\activate" (environment will be activated)
+- on conda , run "conda activate flask"
 
 running flask in environment:
 - on cmd, type "flask run" (should see server running...127.0.0.1:5000) 

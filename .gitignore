@@ -18,4 +18,4 @@ build/
 .idea/
 
 .ipynb_checkpoints/
-notebooks/datasets/true_car_listings.csv
+notebooks/
