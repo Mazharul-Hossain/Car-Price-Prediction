@@ -11,12 +11,7 @@ import model_utils
 app = Flask(__name__, static_url_path='/static')
 model_utils.first_run()
 
-regressor = pickle.load(open(model_utils.data_info["Decision Tree Regressor"], 'rb'))
 # regressor = pickle.load(open('linear.pkl', 'rb'))
-classifier = pickle.load(open(model_utils.data_info["Decision Tree Classifier"], 'rb'))
-
-label_encoder = pickle.load(open(model_utils.data_info["label_encoder"], 'rb'))
-scaler = pickle.load(open(model_utils.data_info["scaler"], 'rb'))
 
 # ==========================================
 read_data = model_utils.load_dataset_frame()
@@ -88,7 +83,7 @@ def car_price():
 def predict():
     try:
         # ['Year', 'Mileage', 'City', 'State', 'Make', 'Model']
-
+        label_encoder = pickle.load(open(model_utils.data_info["label_encoder"], 'rb'))
         features, columns = [], model_utils.data_info['columns']
         for column in columns:
             feature = request.form[column]
@@ -101,15 +96,18 @@ def predict():
                 feature = label_encoder[column].transform(feature)[0]
             features.append(feature)
 
+        scaler = pickle.load(open(model_utils.data_info["scaler"], 'rb'))
         final_features = scaler.transform([np.array(features)])
         # print(final_features)
         # return render_template('car-price.html', prediction_text=final_features)
 
         prediction_text = []
+        regressor = pickle.load(open(model_utils.data_info["Decision Tree Regressor"], 'rb'))
         prediction = regressor.predict(final_features)
         output = round(prediction[0] * model_utils.data_info['car_price_mean'], 3)
         prediction_text.append('Car price should be around ${} (regression model)'.format(output))
 
+        classifier = pickle.load(open(model_utils.data_info["Decision Tree Classifier"], 'rb'))
         prediction = classifier.predict(final_features)
         output = round(prediction[0])
         prediction_text.append('Car price should be between ${} and ${} (classification model)'.format(
