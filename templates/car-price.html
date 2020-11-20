@@ -46,7 +46,7 @@
               <h2>Enter Car Info</h2>
 
                   <label for="make">Car Make:</label>
-                    <select name="make" id="make">
+                    <select name="Make" id="make">
                         {%for item in make%}
                         <option value="1">{{ item }}</option>
                       {%endfor%}
@@ -55,7 +55,7 @@
                   </br>
 
                  <label for="model">Car Model:</label>
-                  <select name="model" id="model">
+                  <select name="Model" id="model">
                       {%for item in model%}
                       <option value="1">{{ item }}</option>
                     {%endfor%}
@@ -64,7 +64,7 @@
                  </br>
 
                  <label for="state">State:</label>
-                    <select name="state" id="state">
+                    <select name="State" id="state">
                         {%for item in state%}
                         <option value="1">{{ item }}</option>
                         {%endfor%}
@@ -73,7 +73,7 @@
                  </br>
 
                  <label for="city">City:</label>
-                    <select name="city" id="city">
+                    <select name="City" id="city">
                         {%for item in city%}
                         <option value="1">{{ item }}</option>
                         {%endfor%}
@@ -82,13 +82,13 @@
                  </br>
 
                 <div class="form-group">
-                    <label>Car Year</label>
-                    <input type="text" name="year" class="form-control" placeholder="Enter Car Model Year">
+                    <label>Enter Car Model Year</label>
+                    <input type="text" name="Year" class="form-control" placeholder="YYYY">
                 </div>
 
                 <div class="form-group">
-                    <label>Car Mileage</label>
-                    <input type="text" name="mileage" class="form-control" placeholder="Enter Car Mileage">
+                    <label>Enter Car Mileage</label>
+                    <input type="text" name="Mileage" class="form-control" placeholder="DDDDDD (miles)">
                 </div>
 
                 <button type="submit" class="btn btn-default">Submit</button>

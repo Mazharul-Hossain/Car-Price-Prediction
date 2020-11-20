@@ -40,7 +40,7 @@ regressors = [
 
 classifier_names = ["Nearest Neighbors Classifier",
                     # "Linear SVM Classifier", "RBF SVM Classifier",
-                    "Gaussian Process Classifier",
+                    # "Gaussian Process Classifier",
                     "Decision Tree Classifier", "Random Forest Classifier", "Extra Trees Classifier",
                     "Neural Net Classifier", "AdaBoost Classifier",
                     "Naive Bayes Classifier", "Quadratic Discriminant Analysis (QDA) Classifier"]
@@ -48,7 +48,7 @@ classifiers = [
     KNeighborsClassifier(n_jobs=-1),
     # SVC(kernel="linear", C=0.025),
     # SVC(gamma=2, C=1),
-    GaussianProcessClassifier(1.0 * RBF(1.0), n_jobs=-1),
+    # GaussianProcessClassifier(1.0 * RBF(1.0), n_jobs=-1),
     DecisionTreeClassifier(),
     RandomForestClassifier(n_jobs=-1),
     ExtraTreesClassifier(n_jobs=-1),
@@ -254,6 +254,10 @@ def load_dataset_frame():
     # lets drop null rows
     vehicles = vehicles.dropna()
 
+    columns = list(vehicles.columns)
+    columns.remove('Price')
+    update_info('columns', columns)
+
     return vehicles
 
 
@@ -301,7 +305,7 @@ def normalize_dataset_frame(vehicles, selector='regression', balanced=True):
 
         label_encoder[col].fit(list(vehicles[col].astype(str).values))
         vehicles[col] = label_encoder[col].transform(list(vehicles[col].astype(str).values))
-        label_encoder[col].get_params()
+        print(label_encoder[col].get_params())
 
     if label_encoder_flag:
         handle_pickle(data_info['label_encoder'], label_encoder)

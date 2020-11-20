@@ -2,14 +2,26 @@ import pickle
 from io import BytesIO
 
 import numpy as np
-import pandas as pd
 from flask import Flask, request, render_template, send_file
 
+import model_utils
 # from flask import Flask,
 from plotting import price_graph
 
 app = Flask(__name__, static_url_path='/static')
-model = pickle.load(open('linear.pkl', 'rb'))
+model_utils.first_run()
+
+# regressor = pickle.load(open(model_utils.data_info["Random Forest Regressor"], 'rb'))
+regressor = pickle.load(open('linear.pkl', 'rb'))
+# classifier = pickle.load(open(model_utils.data_info["Random Forest Regressor"], 'rb'))
+
+label_encoder = {}
+# label_encoder = pickle.load(open(model_utils.data_info["label_encoder"], 'rb'))
+
+scaler = None
+# scaler = pickle.load(open(model_utils.data_info["scaler"], 'rb'))
+
+read_data = model_utils.load_dataset_frame()
 
 
 @app.route('/')
@@ -34,7 +46,13 @@ def bootstrap():
 
 @app.route('/predicting-car-price')
 def car_price():
-    read_data = pd.read_csv('data/true_car_listings.csv')
+    global read_data
+    if model_utils.data_info is None or len(model_utils.data_info) <= 0:
+        model_utils.first_run()
+
+    if read_data is None or len(read_data) <= 0:
+        read_data = model_utils.load_dataset_frame()
+
     city = read_data.City.unique()
     state = read_data.State.unique()
     make = read_data.Make.unique()
@@ -49,15 +67,41 @@ def images():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    int_features = [int(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    # print(final_features)
-    prediction = model.predict(final_features)
-    # return render_template('car-price.html', prediction_text=final_features)
+    try:
+        # ['Year', 'Mileage', 'City', 'State', 'Make', 'Model']
 
-    output = round(prediction[0], 2)
+        features, columns = [], model_utils.data_info['columns']
+        for column in columns:
+            feature = request.form[column]
+            if column == 'Year':
+                feature = int(feature) - int(model_utils.data_info['car_year_min'])
+            elif column == 'Mileage':
+                feature = float(feature) / float(model_utils.data_info['car_mileage_mean'])
+            # elif column in ['City', 'State', 'Make', 'Model']:
+            #     feature = label_encoder[column].transform(str(feature))
+            features.append(feature)
 
-    return render_template('car-price.html', prediction_text='Car price should be $ {}'.format(output))
+        # features = scaler.transform(features)
+        final_features = [np.array(features)]
+        # print(final_features)
+        # return render_template('car-price.html', prediction_text=final_features)
+
+        prediction_text = ""
+        prediction = regressor.predict(final_features)
+        output = round(prediction[0], 3)
+        prediction_text += 'Car price should be around $ {}'.format(output)
+
+        # prediction = classifier.predict(final_features)
+        # output = round(prediction[0])
+        # prediction_text = '\n Car price should be between $ {} and $ {}'.format(
+        #     model_utils.data_info['price_bins'][output], model_utils.data_info['price_bins'][output + 1])
+
+        return render_template('car-price.html', form=request.form,
+                               prediction_text=prediction_text)
+    except Exception as e:
+        prediction_text = 'Exception occurred: {}'.format(e)
+        return render_template('car-price.html', form=request.form,
+                               prediction_text=prediction_text)
 
 
 @app.route('/correlation_matrix')
