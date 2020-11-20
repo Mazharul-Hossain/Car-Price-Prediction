@@ -71,15 +71,11 @@ def first_run():
         if temp_info is not None:
             data_info = temp_info
 
-    if 'csv_file' not in data_info:
-        data_info['csv_file'] = "notebooks/datasets/true_car_listings.csv"
-
-    if 'json_file' not in data_info:
-        data_info['json_file'] = json_file
+    data_info['csv_file'] = "notebooks/datasets/true_car_listings.csv"
+    data_info['json_file'] = json_file
 
     # regression file
-    if 'regression' not in data_info:
-        data_info['regression'] = "notebooks/tmp/regression"
+    data_info['regression'] = "notebooks/tmp/regression"
 
     if not os.path.exists(data_info['regression']):
         os.makedirs(data_info['regression'])
@@ -87,12 +83,10 @@ def first_run():
         raise Exception("Sorry, {} is not a directory!".format(data_info['regression']))
 
     for name in regressor_names:
-        if name not in data_info:
-            data_info[name] = name + ".pkl"
+        data_info[name] = os.path.join(data_info['regression'], name + ".pkl")
 
     # classification file
-    if 'classification' not in data_info:
-        data_info['classification'] = "notebooks/tmp/classification"
+    data_info['classification'] = "notebooks/tmp/classification"
 
     if not os.path.exists(data_info['classification']):
         os.makedirs(data_info['classification'])
@@ -100,17 +94,12 @@ def first_run():
         raise Exception("Sorry, {} is not a directory!".format(data_info['classification']))
 
     for name in classifier_names:
-        if name not in data_info:
-            data_info[name] = name + ".pkl"
+        data_info[name] = os.path.join(data_info['classification'], name + ".pkl")
 
-    if 'num_class' not in data_info:
-        data_info['num_class'] = 10
+    data_info['num_class'] = 10
 
-    if 'label_encoder' not in data_info:
-        data_info['label_encoder'] = "notebooks/tmp/label_encoder.pkl"
-
-    if 'scaler' not in data_info:
-        data_info['scaler'] = "notebooks/tmp/scaler.pkl"
+    data_info['label_encoder'] = "notebooks/tmp/label_encoder.pkl"
+    data_info['scaler'] = "notebooks/tmp/scaler.pkl"
 
     json_info(data_info['json_file'])
 
@@ -193,11 +182,14 @@ def classification_accuracy_model(clf, train_x, test_x, train_y, test_y, balance
     return classification_accuracy(test_y, pred_y, balanced)
 
 
-def handle_pickle(model, file_location, dump=True):
+def handle_pickle(file_location, model=None, dump=True):
     if dump:
         pickle.dump(model, open(file_location, 'wb'))
     else:
-        return pickle.load(open(file_location, 'rb'))
+        if os.path.exists(file_location):
+            return pickle.load(open(file_location, 'rb'))
+        else:
+            return None
 
 
 def model_pickle(model_name, model, train_x, test_x, train_y, test_y, selector='regression', balanced=True):
@@ -209,9 +201,9 @@ def model_pickle(model_name, model, train_x, test_x, train_y, test_y, selector='
         regression_accuracy(test_y, pred_y)
     else:
         classification_accuracy(test_y, pred_y, balanced)
-    handle_pickle(model, data_info[model_name], dump=True)
+    handle_pickle(data_info[model_name], model, dump=True)
 
-    loaded_model = handle_pickle(model, data_info[model_name], dump=False)
+    loaded_model = handle_pickle(data_info[model_name], model=None, dump=False)
     pred_y = loaded_model.predict(test_x)
 
     print("### Test performance after pickling")
@@ -296,13 +288,24 @@ def normalize_dataset_frame(vehicles, selector='regression', balanced=True):
     update_info('car_mileage_mean', car_mileage_mean)
     vehicles['Mileage'] = (vehicles['Mileage'] / car_mileage_mean).astype('float64')
 
-    label_encoder = {}
+    # ======================================================
+    label_encoder_flag = False
+    label_encoder = handle_pickle(data_info['label_encoder'], dump=False)
+    if label_encoder is None:
+        label_encoder = {}
+        label_encoder_flag = True
+
     for col in ['City', 'State', 'Make', 'Model']:
-        label_encoder[col] = LabelEncoder()
+        if col not in label_encoder:
+            label_encoder[col] = LabelEncoder()
+
         label_encoder[col].fit(list(vehicles[col].astype(str).values))
         vehicles[col] = label_encoder[col].transform(list(vehicles[col].astype(str).values))
         label_encoder[col].get_params()
-    handle_pickle(label_encoder, data_info['label_encoder'])
+
+    if label_encoder_flag:
+        handle_pickle(data_info['label_encoder'], label_encoder)
+    # ======================================================
 
     target_name = 'Price'
     train_target = vehicles[target_name]
@@ -313,10 +316,18 @@ def normalize_dataset_frame(vehicles, selector='regression', balanced=True):
     train0, test0, train_target0, test_target0 = train_test_split(vehicles, train_target, test_size=0.2,
                                                                   random_state=0)
 
-    scaler = StandardScaler()
+    # ======================================================
+    scaler_flag = False
+    scaler = handle_pickle(data_info['scaler'], dump=False)
+    if scaler is None:
+        scaler_flag = True
+        scaler = StandardScaler()
+
     train0 = pd.DataFrame(scaler.fit_transform(train0), columns=train0.columns)
     test0 = pd.DataFrame(scaler.transform(test0), columns=test0.columns)
-    handle_pickle(scaler, data_info['scaler'])
+
+    if scaler_flag:
+        handle_pickle(data_info['scaler'], scaler)
 
     # https://stackoverflow.com/a/54508052/2049763
     train0, train_target0 = train0.to_numpy(), train_target0.to_numpy()
