@@ -43,6 +43,12 @@ def about():
     return render_template('about.html')
 
 
+@app.route('/portfolio')
+def portfolio():
+    return render_template('portfolio.html', regressor_names=model_utils.regressor_names,
+                           classifier_names=model_utils.classifier_names)
+
+
 @app.route('/bootstrap-elements')
 def bootstrap():
     return render_template('bootstrap-elements.html')
@@ -62,11 +68,6 @@ def car_price():
         make = read_data.Make.unique()
         model = read_data.Model.unique()
     return render_template('car-price.html', city=city, state=state, make=make, model=model, prediction_text=[])
-
-
-@app.route('/plots/car_price_data/correlation_matrix')
-def images():
-    return render_template("home.html", title='testing')
 
 
 @app.route('/predict', methods=['POST'])
@@ -106,6 +107,11 @@ def predict():
         prediction_text = 'Exception occurred: {}'.format(e)
         return render_template('car-price.html', city=city, state=state, make=make, model=model, form=request.form,
                                prediction_text=prediction_text)
+
+
+@app.route('/plots/car_price_data/correlation_matrix')
+def images():
+    return render_template("home.html", title='testing')
 
 
 @app.route('/correlation_matrix')
