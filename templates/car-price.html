@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forms - Light Way Admin</title>
+    <title>Car Price Prediction</title>
 
     <link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="static/font-awesome/css/font-awesome.min.css" />
@@ -44,23 +44,58 @@
             <form role="form" action="{{ url_for('predict')}}" method="post">
               
               <h2>Enter Car Info</h2>
-              
-              
-              <div class="form-group">
-                <label>Car Year</label>
-                <input type="text" name="year" class="form-control" placeholder="Enter Car Model Year">
-              </div>
 
-              <div class="form-group">
-                <label>Car Mileage</label>
-                <input type="text" name="mileage" class="form-control" placeholder="Enter Car Mileage">
-              </div>
+                  <label for="make">Car Make:</label>
+                    <select name="make" id="make">
+                        {%for item in make%}
+                        <option value="1">{{ item }}</option>
+                      {%endfor%}
+                    </select>
+                  </br>
+                  </br>
 
-              <button type="submit" class="btn btn-default">Submit</button>
-             </br>
-             </br>
-             </br>
-              
+                 <label for="model">Car Model:</label>
+                  <select name="model" id="model">
+                      {%for item in model%}
+                      <option value="1">{{ item }}</option>
+                    {%endfor%}
+                  </select>
+                 </br>
+                 </br>
+
+                 <label for="state">State:</label>
+                    <select name="state" id="state">
+                        {%for item in state%}
+                        <option value="1">{{ item }}</option>
+                        {%endfor%}
+                    </select>
+                 </br>
+                 </br>
+
+                 <label for="city">City:</label>
+                    <select name="city" id="city">
+                        {%for item in city%}
+                        <option value="1">{{ item }}</option>
+                        {%endfor%}
+                    </select>
+                 </br>
+                 </br>
+
+                <div class="form-group">
+                    <label>Car Year</label>
+                    <input type="text" name="year" class="form-control" placeholder="Enter Car Model Year">
+                </div>
+
+                <div class="form-group">
+                    <label>Car Mileage</label>
+                    <input type="text" name="mileage" class="form-control" placeholder="Enter Car Mileage">
+                </div>
+
+                <button type="submit" class="btn btn-default">Submit</button>
+                    </br>
+                    </br>
+                    </br>
+                    
 
             </form>
             {{ prediction_text }}
@@ -70,6 +105,6 @@
 
       </div>
 
-    </div>
+    </div>   
 </body>
 </html>

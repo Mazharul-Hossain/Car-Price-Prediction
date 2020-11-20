@@ -2,6 +2,7 @@ from flask import Flask,request,render_template,send_file,make_response,url_for
 from io import BytesIO
 import base64
 import numpy as np
+import pandas as pd
 import pickle
 #from flask import Flask, 
 from plotting import price_graph
@@ -27,7 +28,12 @@ def bootstrap():
 
 @app.route('/predicting-car-price')
 def car_price():
-    return render_template('car-price.html')
+    read_data=pd.read_csv('data/true_car_listings.csv')
+    city=read_data.City.unique()
+    state=read_data.State.unique()
+    make=read_data.Make.unique()
+    model=read_data.Model.unique()
+    return render_template('car-price.html',city=city ,state=state ,make=make , model=model)
 
 @app.route('/plots/car_price_data/correlation_matrix')
 def images():
