@@ -1,11 +1,9 @@
-
-
-for installation:
+For installation:
 
 - see the following video.
   https://www.youtube.com/watch?v=QjtW-wnXlUY&t=373s
 
-go to project folder:
+Go to project folder:
 
 - run cmd
 - on cmd , run "environment\Scripts\activate" (environment will be activated)
@@ -14,6 +12,15 @@ running flask in environment:
 - on cmd, type "flask run" (should see server running...127.0.0.1:5000) 
 
 Using Heroku:
+ - https://www.freecodecamp.org/news/end-to-end-machine-learning-project-turorial/
  - https://stackabuse.com/deploying-a-flask-application-to-heroku/
  - https://devcenter.heroku.com/articles/flask-memcache
  - Saving requirements: https://stackoverflow.com/a/63230125/2049763
+
+
+Using screen:
+ - screen -L -S training_dataset
+
+Git:
+ - git reset --hard HEAD
+ 
