@@ -19,7 +19,7 @@
 ##### Command to run from head node ###########
 # qsub my_job.pbs        # To run the job
 # qstat -u $USER         # For job status
-# mjobctl -c jobIDnumber # To cancel
+# qdel jobIDnumber       # To cancel
 ###############################################
 ##### To check available module ###############
 # module avail        # inside computation node
@@ -35,7 +35,7 @@ conda create --prefix=my_env_01 python=3.6
 source activate $virtualenv/my_env_01
 
 cd $PBS_O_WORKDIR/
-pip install requirements.txt
+pip install -r requirements.txt
 
 python finds_model.py
 

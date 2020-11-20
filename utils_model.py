@@ -20,6 +20,8 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.svm import SVR, LinearSVR, SVC
 from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
 
+import NpEncoder
+
 data_info = {}
 regressor_names = ["Linear Regression", "Linear SVR", "SVR", "SGD Regressor", "Decision Tree Regressor",
                    "Random Forest Regressor", "Extra Trees Regressor", "Bagging Regressor",
@@ -116,7 +118,7 @@ def first_run():
 def json_info(json_file, dump=True):
     if dump:
         with open(json_file, 'w') as output_file:
-            json.dump(data_info, output_file, ensure_ascii=False, indent=2)
+            json.dump(data_info, output_file, cls=NpEncoder.NpEncoder, ensure_ascii=False, indent=2)
     else:
         data = None
         if os.path.exists(json_file):
