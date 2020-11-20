@@ -26,11 +26,13 @@
 ###############################################
 module load miniconda/3.7.4/gcc.8.3.1
 
-mkdir -p ~/.virtualenv
-cd ~/.virtualenv
+virtualenv=~/.virtualenv
+mkdir -p $virtualenv
+
+cd $virtualenv/
 conda create --prefix=my_env_01 python=3.6
 
-source activate ~/virtualenv/my_env_01
+source activate $virtualenv/my_env_01
 
 cd $PBS_O_WORKDIR/
 pip install requirements.txt
