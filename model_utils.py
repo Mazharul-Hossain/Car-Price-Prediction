@@ -36,7 +36,7 @@ regressors = [
     ExtraTreesRegressor(n_jobs=-1),
     BaggingRegressor(n_jobs=-1),
     GradientBoostingRegressor(),
-    AdaBoostRegressor(ExtraTreesRegressor(), n_estimators=100)]
+    AdaBoostRegressor(RandomForestRegressor(max_depth=10), n_estimators=100)]
 
 classifier_names = ["Nearest Neighbors Classifier",
                     # "Linear SVM Classifier", "RBF SVM Classifier",
@@ -53,7 +53,7 @@ classifiers = [
     RandomForestClassifier(n_jobs=-1),
     ExtraTreesClassifier(n_jobs=-1),
     MLPClassifier(alpha=1, max_iter=1000),
-    AdaBoostClassifier(ExtraTreesClassifier(), n_estimators=100),
+    AdaBoostClassifier(RandomForestClassifier(max_depth=10), n_estimators=100),
     GaussianNB(),
     QuadraticDiscriminantAnalysis()]
 
