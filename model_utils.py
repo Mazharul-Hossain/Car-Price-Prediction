@@ -28,8 +28,8 @@ regressor_names = ["Linear Regression", "Linear SVR", "SVR", "SGD Regressor", "D
                    "Gradient Boosting Regressor", "Ada Boost Regressor"]
 regressors = [
     LinearRegression(n_jobs=-1),
-    LinearSVR(),
-    SVR(max_iter=1000),
+    LinearSVR(max_iter=10000),
+    SVR(max_iter=10000),
     SGDRegressor(early_stopping=True),
     DecisionTreeRegressor(max_depth=10),
     RandomForestRegressor(max_depth=10, n_estimators=10, max_features=1, n_jobs=-1),
