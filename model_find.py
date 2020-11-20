@@ -26,6 +26,11 @@ if any(x is None for x in [train0, test0, train_target0, test_target0]):
 k_fold_5 = KFold(n_splits=5, shuffle=True, random_state=2)
 
 for name, rgs in zip(model_utils.regressor_names, model_utils.regressors):
+
+    loaded_model = model_utils.handle_pickle(model_utils.data_info[name], dump=False)
+    if loaded_model is not None:
+        continue
+
     print("\n## Training for {} starting ****".format(name))
     r2_scores, rmse = [], []
     for train_index, test_index in k_fold_5.split(train0):
@@ -60,7 +65,13 @@ if any(x is None for x in [train0, test0, train_target0, test_target0]):
 k_fold_5 = StratifiedKFold(n_splits=5, shuffle=True, random_state=2)
 
 print("# Starting 5 Fold Cross Validation for Classifiers. Number of Class:", model_utils.data_info['num_class'])
+
 for name, clf in zip(model_utils.classifier_names, model_utils.classifiers):
+
+    loaded_model = model_utils.handle_pickle(model_utils.data_info[name], dump=False)
+    if loaded_model is not None:
+        continue
+
     print("\n## Training for {} starting ****".format(name))
     accuracy_scores = []
     for train_index, test_index in k_fold_5.split(train0, train_target0):
