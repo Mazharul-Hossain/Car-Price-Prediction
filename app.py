@@ -1,12 +1,13 @@
 import pickle
-from io import BytesIO
 
 import numpy as np
-from flask import Flask, request, render_template, send_file
+from flask import Flask, request, render_template
 
 import model_utils
+
 # from flask import Flask,
-from plotting import price_graph
+
+# import markdown.extensions.fenced_code
 
 app = Flask(__name__, static_url_path='/static')
 model_utils.first_run()
@@ -49,9 +50,14 @@ def portfolio():
                            classifier_names=model_utils.classifier_names)
 
 
-@app.route('/bootstrap-elements')
-def bootstrap():
-    return render_template('bootstrap-elements.html')
+@app.route('/blog')
+def blog():
+    # https://dev.to/mrprofessor/rendering-markdown-from-flask-1l41
+    # readme_file = open("ML_Performance.md", "r")
+    md_template_string = ""
+    # md_template_string = markdown.markdown(readme_file.read(), extensions=["fenced_code"])
+
+    return render_template('blog.html', md_template_string=md_template_string)
 
 
 @app.route('/predicting-car-price')
@@ -107,27 +113,6 @@ def predict():
         prediction_text = 'Exception occurred: {}'.format(e)
         return render_template('car-price.html', city=city, state=state, make=make, model=model, form=request.form,
                                prediction_text=prediction_text)
-
-
-@app.route('/plots/car_price_data/correlation_matrix')
-def images():
-    return render_template("home.html", title='testing')
-
-
-@app.route('/correlation_matrix')
-def correlation_matrix():
-    bytes_obj = price_graph()
-    img = BytesIO()
-    bytes_obj.savefig(img)
-    img.seek(0)
-    return send_file(img, mimetype='image/png')
-    # plot= base64.b64encode(img.getvalue()).decode('utf8')
-
-    # render_template('home.html', title= "testing", plot=plot)
-    # return send_file(img, mimetype='image/png')
-    # return send_file(bytes_obj,
-    # attachment_filename='plot.png',
-    # mimetype='image/png')
 
 
 if __name__ == '__main__':
