@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,105 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Price Prediction</title>
 
-    <link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="static/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="static/css/local.css" />
+    <link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/local.css"/>
 
     <script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div id="wrapper">
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{url_for('index')}}">Predicting Used Car Prices</a>
-            </div>
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li><a href="{{url_for('index')}}"><i class="fa fa-bullseye"></i> Dashboard</a></li>
-                    <li><a href="templates/portfolio.html"><i class="fa fa-tasks"></i> ML models</a></li>                    
-                    <li><a href="templates/blog.html"><i class="fa fa-globe"></i>Model Comparison</a></li>
-                    <li class="active"><a href="{{url_for('car_price')}}"><i class="fa fa-list-ol"></i> Know Your Car Price</a></li>
-                    <li><a href="{{url_for('about')}}"><i class="fa fa-table"></i > About</a></li>                    
-                </ul>
-                
-            </div>
-        </nav>
-        <div id="page-wrapper">
-       
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('index') }}">Predicting Used Car Prices</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li><a href="{{ url_for('index') }}"><i class="fa fa-bullseye"></i> Dashboard</a></li>
+                <li><a href="templates/portfolio.html"><i class="fa fa-tasks"></i> ML models</a></li>
+                <li><a href="templates/blog.html"><i class="fa fa-globe"></i>Model Comparison</a></li>
+                <li class="active"><a href="{{ url_for('car_price') }}"><i class="fa fa-list-ol"></i> Know Your Car
+                    Price</a></li>
+                <li><a href="{{ url_for('about') }}"><i class="fa fa-table"></i> About</a></li>
+            </ul>
+
+        </div>
+    </nav>
+    <div id="page-wrapper">
+
         <div class="row">
-          <div class="col-lg-12">
+            <div class="col-lg-12">
 
-            <form role="form" action="{{ url_for('predict')}}" method="post">
-              
-              <h2>Enter Car Info</h2>
+                <form role="form" action="{{ url_for('predict') }}" method="post">
 
-                  <label for="make">Car Make:</label>
+                    <h2>Enter Car Info</h2>
+
+                    <label for="make">Car Make:</label>
                     <select name="Make" id="make">
-                        {%for item in make%}
-                        <option value="1">{{ item }}</option>
-                      {%endfor%}
+                        {% for item in make %}
+                            <option value="{{ item }}">{{ item }}</option>
+                        {% endfor %}
                     </select>
-                  </br>
-                  </br>
+                    </br>
+                    </br>
 
-                 <label for="model">Car Model:</label>
-                  <select name="Model" id="model">
-                      {%for item in model%}
-                      <option value="1">{{ item }}</option>
-                    {%endfor%}
-                  </select>
-                 </br>
-                 </br>
+                    <label for="model">Car Model:</label>
+                    <select name="Model" id="model">
+                        {% for item in model %}
+                            <option value="{{ item }}">{{ item }}</option>
+                        {% endfor %}
+                    </select>
+                    </br>
+                    </br>
 
-                 <label for="state">State:</label>
+                    <label for="state">State:</label>
                     <select name="State" id="state">
-                        {%for item in state%}
-                        <option value="1">{{ item }}</option>
-                        {%endfor%}
+                        {% for item in state %}
+                            <option value="{{ item }}">{{ item }}</option>
+                        {% endfor %}
                     </select>
-                 </br>
-                 </br>
+                    <br/>
+                    <br/>
 
-                 <label for="city">City:</label>
+                    <label for="city">City:</label>
                     <select name="City" id="city">
-                        {%for item in city%}
-                        <option value="1">{{ item }}</option>
-                        {%endfor%}
+                        {% for item in city %}
+                            <option value="{{ item }}">{{ item }}</option>
+                        {% endfor %}
                     </select>
-                 </br>
-                 </br>
+                    </br>
+                    </br>
 
-                <div class="form-group">
-                    <label>Enter Car Model Year</label>
-                    <input type="text" name="Year" class="form-control" placeholder="YYYY">
-                </div>
+                    <div class="form-group">
+                        <label>Enter Car Model Year</label>
+                        <input type="text" name="Year" class="form-control" placeholder="YYYY">
+                    </div>
 
-                <div class="form-group">
-                    <label>Enter Car Mileage</label>
-                    <input type="text" name="Mileage" class="form-control" placeholder="DDDDDD (miles)">
-                </div>
+                    <div class="form-group">
+                        <label>Enter Car Mileage</label>
+                        <input type="text" name="Mileage" class="form-control" placeholder="DDDDDD (miles)">
+                    </div>
 
-                <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default">Submit</button>
                     </br>
                     </br>
                     </br>
-                    
 
-            </form>
-            {{ prediction_text }}
-          </div>
+
+                </form>
+                {% for para in prediction_text %}
+                    <p>{{ para }}</p>
+                {% endfor %}
+{#                {{ prediction_text }}#}
+            </div>
 
         </div>
 
-      </div>
+    </div>
 
-    </div>   
+</div>
 </body>
 </html>

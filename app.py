@@ -11,19 +11,23 @@ from plotting import price_graph
 app = Flask(__name__, static_url_path='/static')
 model_utils.first_run()
 
-# regressor = pickle.load(open(model_utils.data_info["Random Forest Regressor"], 'rb'))
-regressor = pickle.load(open('linear.pkl', 'rb'))
-# classifier = pickle.load(open(model_utils.data_info["Random Forest Regressor"], 'rb'))
+regressor = pickle.load(open(model_utils.data_info["Decision Tree Regressor"], 'rb'))
+# regressor = pickle.load(open('linear.pkl', 'rb'))
+classifier = pickle.load(open(model_utils.data_info["Decision Tree Classifier"], 'rb'))
 
-label_encoder = {}
-# label_encoder = pickle.load(open(model_utils.data_info["label_encoder"], 'rb'))
+label_encoder = pickle.load(open(model_utils.data_info["label_encoder"], 'rb'))
+scaler = pickle.load(open(model_utils.data_info["scaler"], 'rb'))
 
-scaler = None
-# scaler = pickle.load(open(model_utils.data_info["scaler"], 'rb'))
-
+# ==========================================
 read_data = model_utils.load_dataset_frame()
 
+city = read_data.City.unique()
+state = read_data.State.unique()
+make = read_data.Make.unique()
+model = read_data.Model.unique()
 
+
+# ==========================================
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -46,18 +50,18 @@ def bootstrap():
 
 @app.route('/predicting-car-price')
 def car_price():
-    global read_data
+    global read_data, city, state, make, model
     if model_utils.data_info is None or len(model_utils.data_info) <= 0:
         model_utils.first_run()
 
     if read_data is None or len(read_data) <= 0:
         read_data = model_utils.load_dataset_frame()
 
-    city = read_data.City.unique()
-    state = read_data.State.unique()
-    make = read_data.Make.unique()
-    model = read_data.Model.unique()
-    return render_template('car-price.html', city=city, state=state, make=make, model=model)
+        city = read_data.City.unique()
+        state = read_data.State.unique()
+        make = read_data.Make.unique()
+        model = read_data.Model.unique()
+    return render_template('car-price.html', city=city, state=state, make=make, model=model, prediction_text=[])
 
 
 @app.route('/plots/car_price_data/correlation_matrix')
@@ -77,30 +81,30 @@ def predict():
                 feature = int(feature) - int(model_utils.data_info['car_year_min'])
             elif column == 'Mileage':
                 feature = float(feature) / float(model_utils.data_info['car_mileage_mean'])
-            # elif column in ['City', 'State', 'Make', 'Model']:
-            #     feature = label_encoder[column].transform(str(feature))
+            elif column in ['City', 'State', 'Make', 'Model']:
+                feature = np.array([str(feature)])
+                feature = label_encoder[column].transform(feature)[0]
             features.append(feature)
 
-        # features = scaler.transform(features)
-        final_features = [np.array(features)]
+        final_features = scaler.transform([np.array(features)])
         # print(final_features)
         # return render_template('car-price.html', prediction_text=final_features)
 
-        prediction_text = ""
+        prediction_text = []
         prediction = regressor.predict(final_features)
-        output = round(prediction[0], 3)
-        prediction_text += 'Car price should be around $ {}'.format(output)
+        output = round(prediction[0] * model_utils.data_info['car_price_mean'], 3)
+        prediction_text.append('Car price should be around ${} (regression model)'.format(output))
 
-        # prediction = classifier.predict(final_features)
-        # output = round(prediction[0])
-        # prediction_text = '\n Car price should be between $ {} and $ {}'.format(
-        #     model_utils.data_info['price_bins'][output], model_utils.data_info['price_bins'][output + 1])
+        prediction = classifier.predict(final_features)
+        output = round(prediction[0])
+        prediction_text.append('Car price should be between ${} and ${} (classification model)'.format(
+            model_utils.data_info['price_bins'][output], model_utils.data_info['price_bins'][output + 1]))
 
-        return render_template('car-price.html', form=request.form,
+        return render_template('car-price.html', city=city, state=state, make=make, model=model, form=request.form,
                                prediction_text=prediction_text)
     except Exception as e:
         prediction_text = 'Exception occurred: {}'.format(e)
-        return render_template('car-price.html', form=request.form,
+        return render_template('car-price.html', city=city, state=state, make=make, model=model, form=request.form,
                                prediction_text=prediction_text)
 
 

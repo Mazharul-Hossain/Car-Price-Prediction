@@ -8,8 +8,6 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from sklearn.ensemble import BaggingRegressor, AdaBoostRegressor, GradientBoostingRegressor, RandomForestRegressor, \
     ExtraTreesRegressor, RandomForestClassifier, AdaBoostClassifier, ExtraTreesClassifier
 # models
-from sklearn.gaussian_process import GaussianProcessClassifier
-from sklearn.gaussian_process.kernels import RBF
 from sklearn.linear_model import LinearRegression, SGDRegressor
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error, balanced_accuracy_score, accuracy_score
 from sklearn.model_selection import train_test_split
