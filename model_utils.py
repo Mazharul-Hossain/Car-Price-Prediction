@@ -17,7 +17,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.svm import SVR, LinearSVR, SVC
+from sklearn.svm import SVR, LinearSVR
 from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
 
 import NpEncoder
@@ -31,29 +31,29 @@ regressors = [
     LinearSVR(max_iter=10000),
     SVR(max_iter=10000),
     SGDRegressor(early_stopping=True),
-    DecisionTreeRegressor(max_depth=10),
-    RandomForestRegressor(max_depth=10, n_estimators=10, max_features=1, n_jobs=-1),
-    ExtraTreesRegressor(max_depth=10, n_estimators=10, max_features=1, n_jobs=-1),
-    BaggingRegressor(max_features=1, n_jobs=-1),
-    GradientBoostingRegressor(max_features=1),
-    AdaBoostRegressor()]
+    DecisionTreeRegressor(),
+    RandomForestRegressor(n_jobs=-1),
+    ExtraTreesRegressor(n_jobs=-1),
+    BaggingRegressor(n_jobs=-1),
+    GradientBoostingRegressor(),
+    AdaBoostRegressor(ExtraTreesRegressor(), n_estimators=100)]
 
 classifier_names = ["Nearest Neighbors Classifier",
-                    "Linear SVM Classifier", "RBF SVM Classifier",
+                    # "Linear SVM Classifier", "RBF SVM Classifier",
                     "Gaussian Process Classifier",
                     "Decision Tree Classifier", "Random Forest Classifier", "Extra Trees Classifier",
                     "Neural Net Classifier", "AdaBoost Classifier",
                     "Naive Bayes Classifier", "Quadratic Discriminant Analysis (QDA) Classifier"]
 classifiers = [
     KNeighborsClassifier(n_jobs=-1),
-    SVC(kernel="linear", C=0.025),
-    SVC(gamma=2, C=1),
+    # SVC(kernel="linear", C=0.025),
+    # SVC(gamma=2, C=1),
     GaussianProcessClassifier(1.0 * RBF(1.0), n_jobs=-1),
-    DecisionTreeClassifier(max_depth=10),
-    RandomForestClassifier(max_depth=10, n_estimators=10, max_features=1, n_jobs=-1),
-    ExtraTreesClassifier(max_depth=10, n_estimators=10, max_features=1, n_jobs=-1),
+    DecisionTreeClassifier(),
+    RandomForestClassifier(n_jobs=-1),
+    ExtraTreesClassifier(n_jobs=-1),
     MLPClassifier(alpha=1, max_iter=1000),
-    AdaBoostClassifier(),
+    AdaBoostClassifier(ExtraTreesClassifier(), n_estimators=100),
     GaussianNB(),
     QuadraticDiscriminantAnalysis()]
 
@@ -71,7 +71,7 @@ def first_run():
         if temp_info is not None:
             data_info = temp_info
 
-    data_info['csv_file'] = "notebooks/datasets/true_car_listings.csv"
+    data_info['csv_file'] = "data/true_car_listings.csv"
     data_info['json_file'] = json_file
 
     # regression file
