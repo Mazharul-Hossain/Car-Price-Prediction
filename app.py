@@ -95,9 +95,11 @@ def predict():
                 feature = np.array([str(feature)])
                 feature = label_encoder[column].transform(feature)[0]
             features.append(feature)
+        label_encoder = None
 
         scaler = pickle.load(open(model_utils.data_info["scaler"], 'rb'))
         final_features = scaler.transform([np.array(features)])
+        scaler = None
         # print(final_features)
         # return render_template('car-price.html', prediction_text=final_features)
 
@@ -106,12 +108,14 @@ def predict():
         prediction = regressor.predict(final_features)
         output = round(prediction[0] * model_utils.data_info['car_price_mean'], 3)
         prediction_text.append('Car price should be around ${} (regression model)'.format(output))
+        regressor = None
 
         classifier = pickle.load(open(model_utils.data_info["Decision Tree Classifier"], 'rb'))
         prediction = classifier.predict(final_features)
         output = round(prediction[0])
         prediction_text.append('Car price should be between ${} and ${} (classification model)'.format(
             model_utils.data_info['price_bins'][output], model_utils.data_info['price_bins'][output + 1]))
+        classifier = None
 
         return render_template('car-price.html', city=city, state=state, make=make, model=model, form=request.form,
                                prediction_text=prediction_text)
