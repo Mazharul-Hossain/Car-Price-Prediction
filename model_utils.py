@@ -21,13 +21,15 @@ from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
 import NpEncoder
 
 data_info = {}
-regressor_names = ["Linear Regression", "Linear SVR", "SVR", "SGD Regressor", "Decision Tree Regressor",
+regressor_names = ["Linear Regression", "Linear SVR",
+                   # "SVR",
+                   "SGD Regressor", "Decision Tree Regressor",
                    "Random Forest Regressor", "Extra Trees Regressor", "Bagging Regressor",
                    "Gradient Boosting Regressor", "Ada Boost Regressor"]
 regressors = [
     LinearRegression(n_jobs=-1),
     LinearSVR(max_iter=10000),
-    SVR(max_iter=10000),
+    # SVR(max_iter=10000),
     SGDRegressor(early_stopping=True),
     DecisionTreeRegressor(),
     RandomForestRegressor(n_jobs=-1),

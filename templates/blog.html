@@ -38,7 +38,10 @@
     </nav>
     <div id="page-wrapper">
 
+        {% autoescape false %}
         {{ md_template_string }}
+        {% endautoescape %}
+
 
     </div>
 

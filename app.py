@@ -1,13 +1,12 @@
 import pickle
 
+import markdown.extensions.fenced_code
 import numpy as np
 from flask import Flask, request, render_template
 
 import model_utils
 
 # from flask import Flask,
-
-# import markdown.extensions.fenced_code
 
 app = Flask(__name__, static_url_path='/static')
 model_utils.first_run()
@@ -52,10 +51,19 @@ def portfolio():
 
 @app.route('/blog')
 def blog():
+    # https://stackoverflow.com/a/25923245/2049763
+    with open('ML_Performance.txt', 'r') as istr:
+        with open('ML_Performance.md', 'w') as ostr:
+            for i, line in enumerate(istr):
+                if not line.strip().startswith('#'):
+                    # Get rid of the trailing newline (if any).
+                    line = line.rstrip('\n')
+                    line += '  '
+                print(line, file=ostr)
+
     # https://dev.to/mrprofessor/rendering-markdown-from-flask-1l41
-    # readme_file = open("ML_Performance.md", "r")
-    md_template_string = ""
-    # md_template_string = markdown.markdown(readme_file.read(), extensions=["fenced_code"])
+    readme_file = open('ML_Performance.md', "r")
+    md_template_string = markdown.markdown(readme_file.read(), extensions=["fenced_code"])
 
     return render_template('blog.html', md_template_string=md_template_string)
 
