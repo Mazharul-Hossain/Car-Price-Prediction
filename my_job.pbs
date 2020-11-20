@@ -37,7 +37,7 @@ source activate $virtualenv/my_env_01
 cd $PBS_O_WORKDIR/
 pip install -r requirements.txt
 
-python finds_model.py
+python model_find.py
 
 conda deactivate
 module unload miniconda/3.7.4/gcc.8.3.1

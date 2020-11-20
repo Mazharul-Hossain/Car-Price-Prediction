@@ -322,5 +322,5 @@ def normalize_dataset_frame(vehicles, selector='regression', balanced=True):
     train0, train_target0 = train0.to_numpy(), train_target0.to_numpy()
     test0, test_target0 = test0.to_numpy(), test_target0.to_numpy()
 
-    save_dataset_file(train0, test0, train_target0, test_target0, selector, balanced)
+    save_dataset_file(train0, test0, train_target0, test_target0, selector)
     return train0, test0, train_target0, test_target0
