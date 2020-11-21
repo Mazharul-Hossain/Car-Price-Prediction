@@ -47,16 +47,16 @@ def portfolio():
 
 @app.route('/blog')
 def blog():
-    # https://stackoverflow.com/a/25923245/2049763
-    with open('ML_Performance.txt', 'r') as istr:
-        with open('ML_Performance.md', 'w') as ostr:
-            for i, line in enumerate(istr):
-                line = line.strip()
-                if not line.startswith('#') and not line.startswith('|') and len(line) > 0:
-                    # Get rid of the trailing newline (if any).
-                    line = line.rstrip('\n')
-                    line += '  '
-                print(line, file=ostr)
+    # # https://stackoverflow.com/a/25923245/2049763
+    # with open('ML_Performance.txt', 'r') as istr:
+    #     with open('ML_Performance.md', 'w') as ostr:
+    #         for i, line in enumerate(istr):
+    #             line = line.strip()
+    #             if not line.startswith('#') and not line.startswith('|') and len(line) > 0:
+    #                 # Get rid of the trailing newline (if any).
+    #                 line = line.rstrip('\n')
+    #                 line += '  '
+    #             print(line, file=ostr)
 
     # https://dev.to/mrprofessor/rendering-markdown-from-flask-1l41
     readme_file = open('ML_Performance.md', "r")

@@ -4,7 +4,7 @@
 
 # Regression Model Performance
 
-   Model | 5-Fold CV Avg R2 Score | 5-Fold CV Avg RMSE (normalized) | Avg RMSE (in $ value) | Avg R2 Score | Relative Error | RMSE (normalized) 
+|   Model | 5-Fold CV Avg R2 Score | 5-Fold CV Avg RMSE (normalized) | Avg RMSE (in $ value) | Avg R2 Score | Relative Error | RMSE (normalized) |
 |:------|:------:| :------: |:------:|:------:|:------:|:------:|
 |Linear Regression|30.946| 40.004| 8085.094 |31.04| 31.94 | 40.05|
 |Linear SVR | 27.36| 41.03| 8292.456| 27.4|31.24|41.09|
@@ -27,7 +27,9 @@
 | Random Forest Classifier | 53.276 | 53.87 |
 | Extra Trees Classifier | 52.976 | 53.62 |
 | Neural Net Classifier | 23.952 | 23.96 |
-|  AdaBoost Classifier | | |
+| AdaBoost Classifier | 52.512 | 52.81 |
+| Naive Bayes Classifier | 22.064 | 21.93 |
+| Quadratic Discriminant Analysis (QDA) Classifier | 22.442 | 22.26 |
 
 
 # Starting 5 Fold Cross Validation for Regressors.
@@ -800,3 +802,103 @@ Accuracy score for training = 23.96
 Accuracy score for training = 23.96  
 
 ## Training for AdaBoost Classifier starting ****
+
+### training performance
+Accuracy score for training = 67.9  
+### Test performance
+Accuracy score for training = 52.44  
+
+### training performance
+Accuracy score for training = 67.99  
+### Test performance
+Accuracy score for training = 52.6  
+
+### training performance
+Accuracy score for training = 67.94  
+### Test performance
+Accuracy score for training = 52.4  
+
+### training performance
+Accuracy score for training = 67.91  
+### Test performance
+Accuracy score for training = 52.39  
+
+### training performance
+Accuracy score for training = 68.09  
+### Test performance
+Accuracy score for training = 52.73  
+
+Avg Accuracy Score: 52.512  
+
+### Test performance before pickling
+Accuracy score for training = 52.81  
+### Test performance after pickling
+Accuracy score for training = 52.81  
+
+## Training for Naive Bayes Classifier starting ****
+
+### training performance
+Accuracy score for training = 22.05  
+### Test performance
+Accuracy score for training = 22.03  
+
+### training performance
+Accuracy score for training = 22.06  
+### Test performance
+Accuracy score for training = 22.12  
+
+### training performance
+Accuracy score for training = 22.04  
+### Test performance
+Accuracy score for training = 22.15  
+
+### training performance
+Accuracy score for training = 22.09  
+### Test performance
+Accuracy score for training = 22.11  
+
+### training performance
+Accuracy score for training = 22.1  
+### Test performance
+Accuracy score for training = 21.91  
+
+Avg Accuracy Score: 22.064  
+
+### Test performance before pickling
+Accuracy score for training = 21.93  
+### Test performance after pickling
+Accuracy score for training = 21.93  
+
+## Training for Quadratic Discriminant Analysis (QDA) Classifier starting ****
+
+### training performance
+Accuracy score for training = 22.45  
+### Test performance
+Accuracy score for training = 22.31  
+
+### training performance
+Accuracy score for training = 22.35  
+### Test performance
+Accuracy score for training = 22.64  
+
+### training performance
+Accuracy score for training = 22.44  
+### Test performance
+Accuracy score for training = 22.4  
+
+### training performance
+Accuracy score for training = 22.42  
+### Test performance
+Accuracy score for training = 22.54  
+
+### training performance
+Accuracy score for training = 22.47  
+### Test performance
+Accuracy score for training = 22.32  
+
+Avg Accuracy Score: 22.442  
+
+### Test performance before pickling
+Accuracy score for training = 22.26  
+### Test performance after pickling
+Accuracy score for training = 22.26  
