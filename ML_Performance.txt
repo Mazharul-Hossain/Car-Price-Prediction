@@ -1,6 +1,35 @@
 # Machine Learning Performance 
 
+
+
 # Regression Model Performance
+
+|   Model | 5-Fold CV Avg R2 Score | 5-Fold CV Avg RMSE (normalized) | Avg RMSE (in $ value) | Avg R2 Score | Relative Error | RMSE (normalized) |
+|:------|:------:| :------: |:------:|:------:|:------:|:------:|
+|Linear Regression|30.946| 40.004| 8085.094 |31.04| 31.94 | 40.05|
+|Linear SVR | 27.36| 41.03| 8292.456| 27.4|31.24|41.09|
+|SGD Regressor | 30.92| 40.008| 8085.903|31.03|31.94|40.05|
+|Gradient Boosting Regressor |48.992|34.376| 6947.635|48.47| 26.81| 34.61|
+|Decision Tree Regressor|83.116|19.78 &| 3997.679|83.49|13.02|19.59|
+|Random Forest Regressor| 90.686|14.688| 2968.55|90.78|9.84|14.64|
+| Extra Trees Regressor |90.06|15.178 | 3067.582|90.18|10.14|15.11|
+| Bagging Regressor |89.934|15.272| 3086.58|90.06|10.24|15.2|
+| Gradient Boosting Regressor|66.774| 27.746 | 5607.665|66.97| 20.71| 27.71|
+| Ada Boost Regressor |73.442| 24.786| 5009.428| 73.84| 20.57| 24.66|
+
+
+# Classification Model Performance
+
+|	 Model 	| 5-Fold CV Avg Accuracy | Avg Accuracy |
+|	:------ |		:------:		 |	 :------:	|
+| Nearest Neighbors Classifier | 37.684 | 38.31 |
+| Decision Tree Classifier | 47.578 | 48.18 |
+| Random Forest Classifier | 53.276 | 53.87 |
+| Extra Trees Classifier | 52.976 | 53.62 |
+| Neural Net Classifier | 23.952 | 23.96 |
+|  AdaBoost Classifier | | |
+
+
 # Starting 5 Fold Cross Validation for Regressors.
 
 ## Training for Linear Regression starting ****
@@ -598,7 +627,6 @@ acc(relative error) for training = 20.57
 acc(rmse) for training = 24.66
 
 
-# Classification Model Performance
 # Starting 5 Fold Cross Validation for Classifiers. Number of Class: 10
 
 ## Training for Nearest Neighbors Classifier starting ****

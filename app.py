@@ -1,6 +1,7 @@
 import pickle
 
 import markdown.extensions.fenced_code
+import markdown.extensions.tables
 import numpy as np
 from flask import Flask, request, render_template
 
@@ -50,7 +51,8 @@ def blog():
     with open('ML_Performance.txt', 'r') as istr:
         with open('ML_Performance.md', 'w') as ostr:
             for i, line in enumerate(istr):
-                if not line.strip().startswith('#'):
+                line = line.strip()
+                if not line.startswith('#') and not line.startswith('|') and len(line) > 0:
                     # Get rid of the trailing newline (if any).
                     line = line.rstrip('\n')
                     line += '  '
@@ -58,7 +60,7 @@ def blog():
 
     # https://dev.to/mrprofessor/rendering-markdown-from-flask-1l41
     readme_file = open('ML_Performance.md', "r")
-    md_template_string = markdown.markdown(readme_file.read(), extensions=["fenced_code"])
+    md_template_string = markdown.markdown(readme_file.read(), extensions=["fenced_code", "tables"])
 
     return render_template('blog.html', md_template_string=md_template_string)
 
