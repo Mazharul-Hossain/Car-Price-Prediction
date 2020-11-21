@@ -26,6 +26,7 @@ Using Heroku:
 
 Using screen:
  - screen -L -S training_dataset
+ - python model_find.py
 
 Git:
  - git reset --hard HEAD
