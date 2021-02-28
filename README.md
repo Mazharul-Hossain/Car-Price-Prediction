@@ -1,5 +1,5 @@
 # Car-Price-Prediction
-Data Mining project for predicting used car prices
+COMP 8118 : Data Mining project for predicting used car prices
 
 "my_job.pbs" file is used to run the Machine Leaarning models on the HPC server.  
 ```
